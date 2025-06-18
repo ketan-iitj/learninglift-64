@@ -18,37 +18,39 @@ import {
   Settings, 
   Bell 
 } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 const menuItems = [
   {
     title: "Dashboard",
     icon: Users,
-    url: "#",
-    active: true
+    url: "/",
   },
   {
     title: "Team Feedback",
     icon: MessageSquare,
-    url: "#"
+    url: "/feedback"
   },
   {
     title: "1:1 Sessions",
     icon: Calendar,
-    url: "#"
+    url: "/sessions"
   },
   {
     title: "Notifications",
     icon: Bell,
-    url: "#"
+    url: "/notifications"
   },
   {
     title: "Settings",
     icon: Settings,
-    url: "#"
+    url: "/settings"
   }
 ];
 
 export function Sidebar() {
+  const location = useLocation();
+
   return (
     <SidebarPrimitive className="border-r border-slate-200 bg-white/80 backdrop-blur-sm">
       <SidebarHeader className="border-b border-slate-200 p-6">
@@ -72,20 +74,21 @@ export function Sidebar() {
             <SidebarMenu>
               {menuItems.map((item) => {
                 const IconComponent = item.icon;
+                const isActive = location.pathname === item.url;
                 return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton 
                       asChild 
                       className={`w-full justify-start space-x-3 rounded-lg transition-all ${
-                        item.active 
+                        isActive 
                           ? 'bg-blue-50 text-blue-700 border border-blue-200' 
                           : 'hover:bg-slate-50 text-slate-700'
                       }`}
                     >
-                      <a href={item.url} className="flex items-center">
+                      <Link to={item.url} className="flex items-center">
                         <IconComponent size={18} />
                         <span className="font-medium">{item.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
