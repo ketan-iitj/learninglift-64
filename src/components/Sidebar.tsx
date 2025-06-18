@@ -12,38 +12,38 @@ import {
   SidebarGroupLabel
 } from '@/components/ui/sidebar';
 import { 
-  users, 
-  calendar, 
-  message-square, 
-  settings, 
-  bell 
+  Users, 
+  Calendar, 
+  MessageSquare, 
+  Settings, 
+  Bell 
 } from 'lucide-react';
 
 const menuItems = [
   {
     title: "Dashboard",
-    icon: users,
+    icon: Users,
     url: "#",
     active: true
   },
   {
     title: "Team Feedback",
-    icon: message-square,
+    icon: MessageSquare,
     url: "#"
   },
   {
     title: "1:1 Sessions",
-    icon: calendar,
+    icon: Calendar,
     url: "#"
   },
   {
     title: "Notifications",
-    icon: bell,
+    icon: Bell,
     url: "#"
   },
   {
     title: "Settings",
-    icon: settings,
+    icon: Settings,
     url: "#"
   }
 ];
