@@ -58,9 +58,9 @@ export function LoginForm() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-bold text-lg">FM</span>
+            <span className="text-white font-bold text-lg">MM</span>
           </div>
-          <CardTitle className="text-2xl font-bold">ManagerMentor</CardTitle>
+          <CardTitle className="text-2xl font-bold">Manager Mentor</CardTitle>
           <p className="text-slate-600">AI-Powered Feedback Management</p>
         </CardHeader>
         
