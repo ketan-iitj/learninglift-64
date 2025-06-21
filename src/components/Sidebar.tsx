@@ -59,7 +59,7 @@ export function Sidebar() {
             <span className="text-white font-bold text-sm">FM</span>
           </div>
           <div>
-            <h1 className="font-semibold text-slate-900">FeedbackManager</h1>
+            <h1 className="font-semibold text-slate-900">ManagerMentor</h1>
             <p className="text-xs text-slate-500">AI-Powered Insights</p>
           </div>
         </div>
