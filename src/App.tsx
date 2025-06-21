@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { LoginForm } from "@/components/LoginForm";
-import { Header } from "@/components/Header";
 import Index from "./pages/Index";
 import TeamFeedback from "./pages/TeamFeedback";
 import OneOnOneSessions from "./pages/OneOnOneSessions";
@@ -30,7 +29,6 @@ function AppContent() {
   if (user.role === 'employee') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        <Header />
         <EmployeeDashboard />
       </div>
     );
@@ -41,19 +39,16 @@ function AppContent() {
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gradient-to-br from-slate-50 to-blue-50">
         <Sidebar />
-        <div className="flex-1 flex flex-col">
-          <Header />
-          <main className="flex-1 overflow-hidden">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/feedback" element={<TeamFeedback />} />
-              <Route path="/sessions" element={<OneOnOneSessions />} />
-              <Route path="/notifications" element={<Notifications />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-        </div>
+        <main className="flex-1 overflow-hidden">
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/feedback" element={<TeamFeedback />} />
+            <Route path="/sessions" element={<OneOnOneSessions />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
       </div>
     </SidebarProvider>
   );

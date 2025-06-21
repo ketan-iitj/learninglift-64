@@ -4,6 +4,7 @@ import {
   Sidebar as SidebarPrimitive, 
   SidebarContent, 
   SidebarHeader, 
+  SidebarFooter,
   SidebarMenu, 
   SidebarMenuButton, 
   SidebarMenuItem, 
@@ -16,9 +17,13 @@ import {
   Calendar, 
   MessageSquare, 
   Settings, 
-  Bell 
+  Bell,
+  LogOut,
+  User
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
 
 const menuItems = [
   {
@@ -50,6 +55,7 @@ const menuItems = [
 
 export function Sidebar() {
   const location = useLocation();
+  const { user, logout } = useAuth();
 
   return (
     <SidebarPrimitive className="border-r border-slate-200 bg-white/80 backdrop-blur-sm">
@@ -97,6 +103,31 @@ export function Sidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter className="border-t border-slate-200 p-4">
+        <div className="space-y-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center">
+              <User size={16} className="text-slate-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-slate-900 truncate">{user?.name}</p>
+              <p className="text-xs text-slate-500 capitalize truncate">
+                {user?.role} • {user?.department}
+              </p>
+            </div>
+          </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={logout}
+            className="w-full justify-start space-x-2"
+          >
+            <LogOut size={16} />
+            <span>Logout</span>
+          </Button>
+        </div>
+      </SidebarFooter>
     </SidebarPrimitive>
   );
 }
