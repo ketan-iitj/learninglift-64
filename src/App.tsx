@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { LoginForm } from "@/components/LoginForm";
+import { Header } from "@/components/Header";
 import Index from "./pages/Index";
 import TeamFeedback from "./pages/TeamFeedback";
 import OneOnOneSessions from "./pages/OneOnOneSessions";
@@ -25,16 +26,17 @@ function AppContent() {
     return <LoginForm />;
   }
 
-  // Employee users get limited access
+  // Employee users get limited access with header
   if (user.role === 'employee') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <Header />
         <EmployeeDashboard />
       </div>
     );
   }
 
-  // Manager users get full access
+  // Manager users get full access with sidebar (no header)
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gradient-to-br from-slate-50 to-blue-50">
