@@ -56,10 +56,10 @@ export function Sidebar() {
       <SidebarHeader className="border-b border-slate-200 p-6">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">FM</span>
+            <span className="text-white font-bold text-sm">MM</span>
           </div>
           <div>
-            <h1 className="font-semibold text-slate-900">ManagerMentor</h1>
+            <h1 className="font-semibold text-slate-900">Manager Mentor</h1>
             <p className="text-xs text-slate-500">AI-Powered Insights</p>
           </div>
         </div>
