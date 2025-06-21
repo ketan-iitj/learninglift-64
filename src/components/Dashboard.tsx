@@ -5,12 +5,15 @@ import { TeamOverview } from '@/components/TeamOverview';
 import { FeedbackTrends } from '@/components/FeedbackTrends';
 import { ActionItems } from '@/components/ActionItems';
 import { SmartNudges } from '@/components/SmartNudges';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function Dashboard() {
+  const { user } = useAuth();
+
   return (
     <div className="p-8 space-y-8 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 mb-2">Welcome back, Sarah!</h1>
+        <h1 className="text-3xl font-bold text-slate-900 mb-2">Welcome back, {user?.name || 'Manager'}!</h1>
         <p className="text-slate-600">Here's what's happening with your team today.</p>
       </div>
 
