@@ -1,11 +1,18 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { MessageSquare, Users, TrendingUp, Clock, Send, BarChart3, FileText, Star } from 'lucide-react';
 
 export default function TeamFeedback() {
+  const navigate = useNavigate();
+
+  const handleReportNavigation = () => {
+    navigate('/reports');
+  };
+
   return (
     <div className="p-4 md:p-8 space-y-8 max-w-7xl mx-auto">
       <div className="mb-8">
@@ -267,6 +274,7 @@ export default function TeamFeedback() {
                   <Button 
                     key={index}
                     variant="outline" 
+                    onClick={handleReportNavigation}
                     className="h-24 flex flex-col items-center justify-center space-y-2 transition-all duration-300 hover:shadow-lg hover:scale-105 group border-2 hover:border-transparent"
                   >
                     <div className={`p-2 rounded-lg bg-gradient-to-r ${report.color} group-hover:scale-110 transition-transform duration-200`}>
