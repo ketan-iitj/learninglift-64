@@ -1,11 +1,12 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useNavigate } from 'react-router-dom';
 
-const actionItems = [
+const initialActionItems = [
   {
     id: 1,
     title: "Schedule 1:1 with Alex about communication skills",
@@ -41,6 +42,21 @@ const actionItems = [
 ];
 
 export function ActionItems() {
+  const [actionItems, setActionItems] = useState(initialActionItems);
+  const navigate = useNavigate();
+
+  const toggleCompletion = (id: number) => {
+    setActionItems(items => 
+      items.map(item => 
+        item.id === id ? { ...item, completed: !item.completed } : item
+      )
+    );
+  };
+
+  const handleItemClick = (item: any) => {
+    navigate('/action-items');
+  };
+
   return (
     <Card className="shadow-sm border-slate-200">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -51,13 +67,21 @@ export function ActionItems() {
       </CardHeader>
       <CardContent className="space-y-4">
         {actionItems.map((item) => (
-          <div key={item.id} className={`p-4 border rounded-lg transition-all ${
-            item.completed ? 'bg-gray-50 border-gray-200' : 'bg-white border-slate-200 hover:border-blue-200'
-          }`}>
+          <div 
+            key={item.id} 
+            className={`p-4 border rounded-lg transition-all cursor-pointer ${
+              item.completed ? 'bg-gray-50 border-gray-200' : 'bg-white border-slate-200 hover:border-blue-200 hover:shadow-sm'
+            }`}
+            onClick={() => handleItemClick(item)}
+          >
             <div className="flex items-start space-x-3">
               <Checkbox 
                 checked={item.completed}
                 className="mt-1"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleCompletion(item.id);
+                }}
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-2">
@@ -82,7 +106,15 @@ export function ActionItems() {
                     <span className="text-sm text-slate-500">Due: {item.dueDate}</span>
                   </div>
                   {!item.completed && (
-                    <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-blue-600 hover:text-blue-700"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleCompletion(item.id);
+                      }}
+                    >
                       Complete
                     </Button>
                   )}

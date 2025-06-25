@@ -1,11 +1,45 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { User, Bell, Shield, Palette, Bot, Users } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Settings() {
+  const [theme, setTheme] = useState('light');
+  const [notifications, setNotifications] = useState({
+    dailySummary: true,
+    weeklyReports: true,
+    urgentAlerts: true,
+    newFeedback: true,
+    aiInsights: true,
+    sessionReminders: true
+  });
+  const { toast } = useToast();
+
+  const handleThemeChange = (newTheme: string) => {
+    setTheme(newTheme);
+    // Here you would typically apply the theme change
+    toast({
+      title: "Theme Updated",
+      description: `Theme changed to ${newTheme}`,
+    });
+  };
+
+  const handleNotificationSave = () => {
+    toast({
+      title: "Settings Saved",
+      description: "Your notification preferences have been updated.",
+    });
+  };
+
+  const handlePasswordUpdate = () => {
+    toast({
+      title: "Password Updated",
+      description: "Your password has been successfully changed.",
+    });
+  };
+
   return (
     <div className="p-8 space-y-8 max-w-7xl mx-auto">
       <div className="mb-8">
@@ -67,11 +101,19 @@ export default function Settings() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Theme</label>
-                  <select className="w-full p-3 border rounded-lg">
-                    <option>Light</option>
-                    <option>Dark</option>
-                    <option>System</option>
-                  </select>
+                  <div className="flex space-x-2">
+                    {['light', 'dark', 'system'].map((themeOption) => (
+                      <Button
+                        key={themeOption}
+                        variant={theme === themeOption ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => handleThemeChange(themeOption)}
+                        className="capitalize"
+                      >
+                        {themeOption}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Time Zone</label>
@@ -120,21 +162,36 @@ export default function Settings() {
                         <p className="font-medium">Daily Summary</p>
                         <p className="text-sm text-slate-600">Daily digest of team activities</p>
                       </div>
-                      <input type="checkbox" defaultChecked className="w-4 h-4" />
+                      <input 
+                        type="checkbox" 
+                        checked={notifications.dailySummary}
+                        onChange={(e) => setNotifications({...notifications, dailySummary: e.target.checked})}
+                        className="w-4 h-4" 
+                      />
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">Weekly Reports</p>
                         <p className="text-sm text-slate-600">Comprehensive weekly insights</p>
                       </div>
-                      <input type="checkbox" defaultChecked className="w-4 h-4" />
+                      <input 
+                        type="checkbox" 
+                        checked={notifications.weeklyReports}
+                        onChange={(e) => setNotifications({...notifications, weeklyReports: e.target.checked})}
+                        className="w-4 h-4" 
+                      />
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">Urgent Alerts</p>
                         <p className="text-sm text-slate-600">Critical issues requiring attention</p>
                       </div>
-                      <input type="checkbox" defaultChecked className="w-4 h-4" />
+                      <input 
+                        type="checkbox" 
+                        checked={notifications.urgentAlerts}
+                        onChange={(e) => setNotifications({...notifications, urgentAlerts: e.target.checked})}
+                        className="w-4 h-4" 
+                      />
                     </div>
                   </div>
                 </div>
@@ -146,24 +203,44 @@ export default function Settings() {
                         <p className="font-medium">New Feedback</p>
                         <p className="text-sm text-slate-600">When team members submit feedback</p>
                       </div>
-                      <input type="checkbox" defaultChecked className="w-4 h-4" />
+                      <input 
+                        type="checkbox" 
+                        checked={notifications.newFeedback}
+                        onChange={(e) => setNotifications({...notifications, newFeedback: e.target.checked})}
+                        className="w-4 h-4" 
+                      />
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">AI Insights</p>
                         <p className="text-sm text-slate-600">New AI-generated insights</p>
                       </div>
-                      <input type="checkbox" defaultChecked className="w-4 h-4" />
+                      <input 
+                        type="checkbox" 
+                        checked={notifications.aiInsights}
+                        onChange={(e) => setNotifications({...notifications, aiInsights: e.target.checked})}
+                        className="w-4 h-4" 
+                      />
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">Session Reminders</p>
                         <p className="text-sm text-slate-600">1:1 meeting reminders</p>
                       </div>
-                      <input type="checkbox" defaultChecked className="w-4 h-4" />
+                      <input 
+                        type="checkbox" 
+                        checked={notifications.sessionReminders}
+                        onChange={(e) => setNotifications({...notifications, sessionReminders: e.target.checked})}
+                        className="w-4 h-4" 
+                      />
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="mt-6 pt-6 border-t">
+                <Button onClick={handleNotificationSave} className="w-full">
+                  Apply Notification Settings
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -285,67 +362,94 @@ export default function Settings() {
         </TabsContent>
 
         <TabsContent value="security" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Shield className="h-5 w-5" />
-                <span>Security Settings</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                  <h3 className="font-semibold">Account Security</h3>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Current Password</label>
-                      <input type="password" className="w-full p-3 border rounded-lg" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Shield className="h-5 w-5" />
+                  <span>Password & Authentication</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Current Password</label>
+                  <input type="password" className="w-full p-3 border rounded-lg" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">New Password</label>
+                  <input type="password" className="w-full p-3 border rounded-lg" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Confirm New Password</label>
+                  <input type="password" className="w-full p-3 border rounded-lg" />
+                </div>
+                <Button className="w-full" onClick={handlePasswordUpdate}>Update Password</Button>
+                
+                <div className="pt-4 border-t">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <p className="font-medium">Two-Factor Authentication</p>
+                      <p className="text-sm text-slate-600">Add extra security to your account</p>
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">New Password</label>
-                      <input type="password" className="w-full p-3 border rounded-lg" />
+                    <Button variant="outline" size="sm">Enable</Button>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Login Notifications</p>
+                      <p className="text-sm text-slate-600">Get notified of new login attempts</p>
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Confirm New Password</label>
-                      <input type="password" className="w-full p-3 border rounded-lg" />
-                    </div>
-                    <Button className="w-full">Update Password</Button>
+                    <input type="checkbox" defaultChecked className="w-4 h-4" />
                   </div>
                 </div>
-                <div className="space-y-6">
-                  <h3 className="font-semibold">Privacy Settings</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">Two-Factor Authentication</p>
-                        <p className="text-sm text-slate-600">Add extra security to your account</p>
-                      </div>
-                      <Button variant="outline" size="sm">Enable</Button>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">Data Sharing</p>
-                        <p className="text-sm text-slate-600">Share anonymized data for AI improvements</p>
-                      </div>
-                      <input type="checkbox" defaultChecked className="w-4 h-4" />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">Session Timeout</p>
-                        <p className="text-sm text-slate-600">Auto-logout after inactivity</p>
-                      </div>
-                      <select className="p-2 border rounded text-sm">
-                        <option>30 minutes</option>
-                        <option>1 hour</option>
-                        <option>4 hours</option>
-                        <option>Never</option>
-                      </select>
-                    </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Shield className="h-5 w-5" />
+                  <span>Privacy & Data</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Data Sharing</p>
+                    <p className="text-sm text-slate-600">Share anonymized data for AI improvements</p>
                   </div>
+                  <input type="checkbox" defaultChecked className="w-4 h-4" />
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+                
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Analytics Tracking</p>
+                    <p className="text-sm text-slate-600">Help improve the app with usage analytics</p>
+                  </div>
+                  <input type="checkbox" defaultChecked className="w-4 h-4" />
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Session Timeout</p>
+                    <p className="text-sm text-slate-600">Auto-logout after inactivity</p>
+                  </div>
+                  <select className="p-2 border rounded text-sm">
+                    <option>30 minutes</option>
+                    <option>1 hour</option>
+                    <option>4 hours</option>
+                    <option>Never</option>
+                  </select>
+                </div>
+
+                <div className="pt-4 border-t space-y-3">
+                  <Button variant="outline" className="w-full">Download My Data</Button>
+                  <Button variant="outline" className="w-full">Export Account Settings</Button>
+                  <Button variant="destructive" className="w-full">Delete Account</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,6 +18,8 @@ import { Sidebar } from "@/components/Sidebar";
 import { EmployeeDashboard } from "@/components/EmployeeDashboard";
 import TeamSentiment from "./pages/TeamSentiment";
 import ActionItemsPage from "./pages/ActionItemsPage";
+import Reports from "./pages/Reports";
+import TemplateDetails from "./pages/TemplateDetails";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +54,8 @@ function AppContent() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/team-sentiment" element={<TeamSentiment />} />
             <Route path="/action-items" element={<ActionItemsPage />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/template-details" element={<TemplateDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

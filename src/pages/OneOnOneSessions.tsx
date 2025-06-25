@@ -1,11 +1,33 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Calendar, Clock, User, CheckCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, User, CheckCircle, AlertCircle, CalendarIcon } from 'lucide-react';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 export default function OneOnOneSessions() {
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [upcomingSessions, setUpcomingSessions] = useState([
+    { name: "Alex Chen", date: "Today", time: "2:00 PM", type: "Regular Check-in", status: "confirmed" },
+    { name: "Sarah Johnson", date: "Tomorrow", time: "10:30 AM", type: "Goal Setting", status: "pending" },
+    { name: "Mike Torres", date: "Friday", time: "3:30 PM", type: "Performance Review", status: "confirmed" },
+  ]);
+
+  const handleScheduleSession = () => {
+    const newSession = {
+      name: "New Team Member",
+      date: selectedDate ? format(selectedDate, "PPP") : "TBD",
+      time: "TBD",
+      type: "Regular Check-in",
+      status: "pending"
+    };
+    setUpcomingSessions([...upcomingSessions, newSession]);
+  };
+
   return (
     <div className="p-8 space-y-8 max-w-7xl mx-auto">
       <div className="mb-8">
@@ -14,49 +36,57 @@ export default function OneOnOneSessions() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <Card>
+        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-shadow">
           <CardContent className="p-6">
             <div className="flex items-center space-x-3">
-              <Calendar className="h-8 w-8 text-blue-500" />
+              <div className="p-2 bg-blue-500 rounded-lg">
+                <Calendar className="h-6 w-6 text-white" />
+              </div>
               <div>
-                <p className="text-sm font-medium text-slate-600">This Week</p>
-                <p className="text-2xl font-bold">8</p>
+                <p className="text-sm font-medium text-blue-800">This Week</p>
+                <p className="text-2xl font-bold text-blue-900">8</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-shadow">
           <CardContent className="p-6">
             <div className="flex items-center space-x-3">
-              <CheckCircle className="h-8 w-8 text-green-500" />
+              <div className="p-2 bg-green-500 rounded-lg">
+                <CheckCircle className="h-6 w-6 text-white" />
+              </div>
               <div>
-                <p className="text-sm font-medium text-slate-600">Completed</p>
-                <p className="text-2xl font-bold">5</p>
+                <p className="text-sm font-medium text-green-800">Completed</p>
+                <p className="text-2xl font-bold text-green-900">5</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-shadow">
           <CardContent className="p-6">
             <div className="flex items-center space-x-3">
-              <Clock className="h-8 w-8 text-orange-500" />
+              <div className="p-2 bg-orange-500 rounded-lg">
+                <Clock className="h-6 w-6 text-white" />
+              </div>
               <div>
-                <p className="text-sm font-medium text-slate-600">Upcoming</p>
-                <p className="text-2xl font-bold">3</p>
+                <p className="text-sm font-medium text-orange-800">Upcoming</p>
+                <p className="text-2xl font-bold text-orange-900">3</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200 hover:shadow-lg transition-shadow">
           <CardContent className="p-6">
             <div className="flex items-center space-x-3">
-              <AlertCircle className="h-8 w-8 text-red-500" />
+              <div className="p-2 bg-red-500 rounded-lg">
+                <AlertCircle className="h-6 w-6 text-white" />
+              </div>
               <div>
-                <p className="text-sm font-medium text-slate-600">Overdue</p>
-                <p className="text-2xl font-bold">2</p>
+                <p className="text-sm font-medium text-red-800">Overdue</p>
+                <p className="text-2xl font-bold text-red-900">2</p>
               </div>
             </div>
           </CardContent>
@@ -90,7 +120,29 @@ export default function OneOnOneSessions() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Date</label>
-                    <input type="date" className="w-full p-3 border rounded-lg" />
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !selectedDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <CalendarComponent
+                          mode="single"
+                          selected={selectedDate}
+                          onSelect={setSelectedDate}
+                          initialFocus
+                          className={cn("p-3 pointer-events-auto")}
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Time</label>
@@ -107,7 +159,7 @@ export default function OneOnOneSessions() {
                     <option>Feedback Discussion</option>
                   </select>
                 </div>
-                <Button className="w-full">Schedule Session</Button>
+                <Button className="w-full" onClick={handleScheduleSession}>Schedule Session</Button>
               </CardContent>
             </Card>
 
@@ -117,14 +169,12 @@ export default function OneOnOneSessions() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {[
-                    { name: "Alex Chen", date: "Today", time: "2:00 PM", type: "Regular Check-in", status: "confirmed" },
-                    { name: "Sarah Johnson", date: "Tomorrow", time: "10:30 AM", type: "Goal Setting", status: "pending" },
-                    { name: "Mike Torres", date: "Friday", time: "3:30 PM", type: "Performance Review", status: "confirmed" },
-                  ].map((session, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                  {upcomingSessions.map((session, index) => (
+                    <div key={index} className="flex items-center justify-between p-4 border rounded-lg hover:bg-slate-50 transition-colors">
                       <div className="flex items-center space-x-3">
-                        <User className="h-8 w-8 text-slate-400" />
+                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                          <User className="h-5 w-5 text-blue-600" />
+                        </div>
                         <div>
                           <p className="font-medium">{session.name}</p>
                           <p className="text-sm text-slate-600">{session.type}</p>
@@ -157,7 +207,7 @@ export default function OneOnOneSessions() {
                 <div className="space-y-4">
                   <h3 className="font-semibold">Performance-Based Templates</h3>
                   <div className="space-y-3">
-                    <div className="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer">
+                    <div className="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer hover:shadow-md transition-all">
                       <h4 className="font-medium">High Performer Check-in</h4>
                       <p className="text-sm text-slate-600">For team members exceeding expectations</p>
                       <div className="mt-2 text-xs text-blue-600">
@@ -166,7 +216,7 @@ export default function OneOnOneSessions() {
                         • Advanced project assignments
                       </div>
                     </div>
-                    <div className="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer">
+                    <div className="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer hover:shadow-md transition-all">
                       <h4 className="font-medium">Improvement Focus</h4>
                       <p className="text-sm text-slate-600">For addressing performance gaps</p>
                       <div className="mt-2 text-xs text-orange-600">
@@ -180,7 +230,7 @@ export default function OneOnOneSessions() {
                 <div className="space-y-4">
                   <h3 className="font-semibold">Feedback-Driven Templates</h3>
                   <div className="space-y-3">
-                    <div className="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer">
+                    <div className="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer hover:shadow-md transition-all">
                       <h4 className="font-medium">Communication Focus</h4>
                       <p className="text-sm text-slate-600">Based on feedback about communication</p>
                       <div className="mt-2 text-xs text-purple-600">
@@ -189,7 +239,7 @@ export default function OneOnOneSessions() {
                         • Presentation skills development
                       </div>
                     </div>
-                    <div className="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer">
+                    <div className="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer hover:shadow-md transition-all">
                       <h4 className="font-medium">Leadership Development</h4>
                       <p className="text-sm text-slate-600">For emerging leaders</p>
                       <div className="mt-2 text-xs text-green-600">

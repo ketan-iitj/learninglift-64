@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const nudges = [
   {
@@ -12,7 +13,8 @@ const nudges = [
     message: "Your team's feedback shows a 15% increase in requests for clearer direction. Consider scheduling a team alignment meeting.",
     action: "Schedule Team Sync",
     priority: "medium",
-    icon: "💡"
+    icon: "💡",
+    route: "/sessions"
   },
   {
     id: 2,
@@ -21,7 +23,8 @@ const nudges = [
     message: "You've received 3 mentions for improved mentoring this week. Your coaching approach is making an impact!",
     action: "View Details",
     priority: "low",
-    icon: "🎉"
+    icon: "🎉",
+    route: "/team-sentiment"
   },
   {
     id: 3,
@@ -30,7 +33,8 @@ const nudges = [
     message: "When giving feedback on 'time management,' try the STAR method: Situation, Task, Action, Result for more specific guidance.",
     action: "Learn More",
     priority: "low",
-    icon: "🧠"
+    icon: "🧠",
+    route: "/feedback"
   },
   {
     id: 4,
@@ -39,11 +43,18 @@ const nudges = [
     message: "Jordan's engagement score dropped 20% this week. Previous feedback mentioned workload concerns - time for a check-in?",
     action: "Schedule 1:1",
     priority: "high",
-    icon: "⚠️"
+    icon: "⚠️",
+    route: "/sessions"
   }
 ];
 
 export function SmartNudges() {
+  const navigate = useNavigate();
+
+  const handleNudgeAction = (nudge: any) => {
+    navigate(nudge.route);
+  };
+
   return (
     <Card className="shadow-sm border-slate-200">
       <CardHeader>
@@ -85,6 +96,7 @@ export function SmartNudges() {
                       nudge.priority === 'high' ? 'text-red-600 hover:text-red-700' :
                       'text-blue-600 hover:text-blue-700'
                     }`}
+                    onClick={() => handleNudgeAction(nudge)}
                   >
                     {nudge.action}
                   </Button>
