@@ -6,9 +6,11 @@ import { FeedbackTrends } from '@/components/FeedbackTrends';
 import { ActionItems } from '@/components/ActionItems';
 import { SmartNudges } from '@/components/SmartNudges';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export function Dashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="p-8 space-y-8 max-w-7xl mx-auto">
@@ -18,7 +20,10 @@ export function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0">
+        <Card 
+          className="bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => navigate('/team-sentiment')}
+        >
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -33,7 +38,10 @@ export function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white border-0">
+        <Card 
+          className="bg-gradient-to-r from-green-500 to-green-600 text-white border-0 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => navigate('/feedback')}
+        >
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -48,7 +56,10 @@ export function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white border-0">
+        <Card 
+          className="bg-gradient-to-r from-purple-500 to-purple-600 text-white border-0 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => navigate('/action-items')}
+        >
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
