@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,7 @@ import { useAuth } from '@/contexts/AuthContext';
 export function EmployeeDashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("feedback-requests");
 
   const handleProvideFeedback = (requestId: string) => {
     navigate(`/provide-feedback/${requestId}`);
@@ -26,20 +26,16 @@ export function EmployeeDashboard() {
   const handleTileClick = (tileType: string) => {
     switch (tileType) {
       case 'feedback-given':
-        // Navigate to feedback history or feedback tab
-        document.querySelector('[data-value="feedback-requests"]')?.click();
+        setActiveTab("feedback-requests");
         break;
       case 'pending-requests':
-        // Navigate to pending requests tab
-        document.querySelector('[data-value="feedback-requests"]')?.click();
+        setActiveTab("feedback-requests");
         break;
       case 'peer-reviews':
-        // Navigate to peer feedback tab
-        document.querySelector('[data-value="peer-feedback"]')?.click();
+        setActiveTab("peer-feedback");
         break;
       case 'rating':
-        // Navigate to self assessment tab
-        document.querySelector('[data-value="self-feedback"]')?.click();
+        setActiveTab("self-feedback");
         break;
       default:
         break;
@@ -123,7 +119,7 @@ export function EmployeeDashboard() {
         </Card>
       </div>
 
-      <Tabs defaultValue="feedback-requests" className="space-y-6">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="grid w-full grid-cols-3 bg-slate-100 p-1 rounded-lg">
           <TabsTrigger value="feedback-requests" className="transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm">Feedback Requests</TabsTrigger>
           <TabsTrigger value="self-feedback" className="transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm">Self Assessment</TabsTrigger>
