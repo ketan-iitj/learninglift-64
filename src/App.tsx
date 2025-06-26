@@ -13,6 +13,9 @@ import OneOnOneSessions from "./pages/OneOnOneSessions";
 import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import ProvideFeedback from "./pages/ProvideFeedback";
+import SelfAssessment from "./pages/SelfAssessment";
+import PeerFeedback from "./pages/PeerFeedback";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/Sidebar";
 import { EmployeeDashboard } from "@/components/EmployeeDashboard";
@@ -35,7 +38,13 @@ function AppContent() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
         <Header />
-        <EmployeeDashboard />
+        <Routes>
+          <Route path="/" element={<EmployeeDashboard />} />
+          <Route path="/provide-feedback/:requestId" element={<ProvideFeedback />} />
+          <Route path="/self-assessment/:type" element={<SelfAssessment />} />
+          <Route path="/peer-feedback/:peerId" element={<PeerFeedback />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </div>
     );
   }
