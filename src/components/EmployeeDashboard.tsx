@@ -26,7 +26,7 @@ export function EmployeeDashboard() {
   const handleTileClick = (tileType: string) => {
     switch (tileType) {
       case 'feedback-given':
-        setActiveTab("feedback-requests");
+        navigate('/feedback-given');
         break;
       case 'pending-requests':
         setActiveTab("feedback-requests");

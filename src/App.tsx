@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,6 +22,7 @@ import TeamSentiment from "./pages/TeamSentiment";
 import ActionItemsPage from "./pages/ActionItemsPage";
 import Reports from "./pages/Reports";
 import TemplateDetails from "./pages/TemplateDetails";
+import FeedbackGiven from "./pages/FeedbackGiven";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +40,7 @@ function AppContent() {
         <Header />
         <Routes>
           <Route path="/" element={<EmployeeDashboard />} />
+          <Route path="/feedback-given" element={<FeedbackGiven />} />
           <Route path="/provide-feedback/:requestId" element={<ProvideFeedback />} />
           <Route path="/self-assessment/:type" element={<SelfAssessment />} />
           <Route path="/peer-feedback/:peerId" element={<PeerFeedback />} />
