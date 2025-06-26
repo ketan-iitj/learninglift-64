@@ -23,6 +23,29 @@ export function EmployeeDashboard() {
     navigate(`/peer-feedback/${peerId}`);
   };
 
+  const handleTileClick = (tileType: string) => {
+    switch (tileType) {
+      case 'feedback-given':
+        // Navigate to feedback history or feedback tab
+        document.querySelector('[data-value="feedback-requests"]')?.click();
+        break;
+      case 'pending-requests':
+        // Navigate to pending requests tab
+        document.querySelector('[data-value="feedback-requests"]')?.click();
+        break;
+      case 'peer-reviews':
+        // Navigate to peer feedback tab
+        document.querySelector('[data-value="peer-feedback"]')?.click();
+        break;
+      case 'rating':
+        // Navigate to self assessment tab
+        document.querySelector('[data-value="self-feedback"]')?.click();
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="p-8 space-y-8 max-w-7xl mx-auto">
       <div className="mb-8">
@@ -31,7 +54,10 @@ export function EmployeeDashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <Card className="group transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+        <Card 
+          className="group transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200"
+          onClick={() => handleTileClick('feedback-given')}
+        >
           <CardContent className="p-6">
             <div className="flex items-center space-x-3">
               <div className="p-3 bg-blue-500 rounded-xl group-hover:scale-110 transition-transform duration-200 shadow-lg">
@@ -45,7 +71,10 @@ export function EmployeeDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="group transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+        <Card 
+          className="group transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200"
+          onClick={() => handleTileClick('pending-requests')}
+        >
           <CardContent className="p-6">
             <div className="flex items-center space-x-3">
               <div className="p-3 bg-orange-500 rounded-xl group-hover:scale-110 transition-transform duration-200 shadow-lg">
@@ -59,7 +88,10 @@ export function EmployeeDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="group transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+        <Card 
+          className="group transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer bg-gradient-to-br from-green-50 to-green-100 border-green-200"
+          onClick={() => handleTileClick('peer-reviews')}
+        >
           <CardContent className="p-6">
             <div className="flex items-center space-x-3">
               <div className="p-3 bg-green-500 rounded-xl group-hover:scale-110 transition-transform duration-200 shadow-lg">
@@ -73,7 +105,10 @@ export function EmployeeDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="group transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+        <Card 
+          className="group transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200"
+          onClick={() => handleTileClick('rating')}
+        >
           <CardContent className="p-6">
             <div className="flex items-center space-x-3">
               <div className="p-3 bg-purple-500 rounded-xl group-hover:scale-110 transition-transform duration-200 shadow-lg">
