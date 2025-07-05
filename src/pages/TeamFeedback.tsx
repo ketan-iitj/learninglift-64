@@ -1,10 +1,10 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { MessageSquare, Users, TrendingUp, Clock, Send, BarChart3, FileText, Star } from 'lucide-react';
+import { MessageSquare, Users, TrendingUp, Clock, Send, BarChart3, FileText, Star, UserPlus } from 'lucide-react';
+import { TeamProfiles } from '@/components/TeamProfiles';
 
 export default function TeamFeedback() {
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ export default function TeamFeedback() {
       </div>
 
       <Tabs defaultValue="collect" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 bg-slate-100 p-1 rounded-lg">
+        <TabsList className="grid w-full grid-cols-4 bg-slate-100 p-1 rounded-lg">
           <TabsTrigger value="collect" className="transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm">
             <Send className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Collect Feedback</span>
@@ -94,6 +94,11 @@ export default function TeamFeedback() {
             <FileText className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Generate Reports</span>
             <span className="sm:hidden">Reports</span>
+          </TabsTrigger>
+          <TabsTrigger value="profiles" className="transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+            <UserPlus className="h-4 w-4 mr-2" />
+            <span className="hidden sm:inline">Team Profiles</span>
+            <span className="sm:hidden">Profiles</span>
           </TabsTrigger>
         </TabsList>
 
@@ -289,6 +294,10 @@ export default function TeamFeedback() {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="profiles" className="space-y-6">
+          <TeamProfiles />
         </TabsContent>
       </Tabs>
     </div>
