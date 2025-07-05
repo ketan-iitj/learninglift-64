@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Search, Plus, Edit, Eye } from 'lucide-react';
+import { Search, Plus, Edit, Eye, Users } from 'lucide-react';
 import { TeamMemberCard } from '@/components/TeamMemberCard';
 import { TeamMemberProfileModal } from '@/components/TeamMemberProfileModal';
 
