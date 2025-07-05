@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Search, Plus, Edit, Eye, Users } from 'lucide-react';
 import { TeamMemberCard } from '@/components/TeamMemberCard';
 import { TeamMemberProfileModal } from '@/components/TeamMemberProfileModal';
+import { AddMemberModal } from '@/components/AddMemberModal';
 
 export interface TeamMember {
   id: string;
@@ -101,10 +101,11 @@ const mockTeamMembers: TeamMember[] = [
 ];
 
 export function TeamProfiles() {
-  const [teamMembers] = useState<TeamMember[]>(mockTeamMembers);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(mockTeamMembers);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<'view' | 'edit'>('view');
 
   const filteredMembers = teamMembers.filter(member =>
@@ -125,6 +126,14 @@ export function TeamProfiles() {
     setIsModalOpen(true);
   };
 
+  const handleAddMember = () => {
+    setIsAddModalOpen(true);
+  };
+
+  const handleSaveNewMember = (newMember: TeamMember) => {
+    setTeamMembers(prev => [...prev, newMember]);
+  };
+
   return (
     <div className="space-y-6">
       <Card>
@@ -134,7 +143,7 @@ export function TeamProfiles() {
               <Users className="h-5 w-5 text-blue-500" />
               <span>Team Member Profiles</span>
             </span>
-            <Button className="flex items-center space-x-2">
+            <Button onClick={handleAddMember} className="flex items-center space-x-2">
               <Plus className="h-4 w-4" />
               <span>Add Member</span>
             </Button>
@@ -174,6 +183,12 @@ export function TeamProfiles() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         mode={modalMode}
+      />
+
+      <AddMemberModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSave={handleSaveNewMember}
       />
     </div>
   );
